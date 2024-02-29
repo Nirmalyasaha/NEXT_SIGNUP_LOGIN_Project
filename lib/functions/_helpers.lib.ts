@@ -38,6 +38,14 @@ export function isAppleSafari() {
 }
 
 
+export const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}$/;
+
+
+
+
+
+
+
 export const globalCatchSucess = (response: AxiosResponse<BaseApiResponse>) => {
   let message = "Something went wrong";
   if (response?.data?.message) {

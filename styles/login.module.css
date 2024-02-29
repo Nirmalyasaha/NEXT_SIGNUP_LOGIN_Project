@@ -3,12 +3,12 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;  
-    margin:30px auto;
-    background-color: rgb(178, 248, 248);
+    margin:40px auto;
+    background-color: rgb(218, 243, 243);
     border-radius: 10px;
-    box-shadow:  6px 10px 10px  rgba(54, 132, 250, 0.945);
-    height: 60vh;
-    width: 50%;   
+    box-shadow:  6px 10px 10px  rgba(44, 124, 243, 0.945);
+    height: 50vh;
+    width: 40%;   
 
 }
 .formgroup{

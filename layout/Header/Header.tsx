@@ -64,7 +64,7 @@ export default function Header() {
 
   const handleLogout = () => {
     dispatch(logout());
-    router.push("/login");
+    router.push("/auth/signup");
   };
   const handleLogin=()=>{
     router.push("/auth/login")
