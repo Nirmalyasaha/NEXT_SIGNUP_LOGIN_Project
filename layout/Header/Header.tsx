@@ -19,7 +19,6 @@ import { useAppSelector } from "@/hooks/redux/useAppSelector";
 import assest from "@/json/assest";
 import { logout } from "@/reduxtoolkit/slices/userSlice";
 import CustomButtonPrimary from "@/ui/CustomButtons/CustomButtonPrimary";
-
 import { HeaderWrap } from "@/styles/StyledComponents/HeaderWrapper";
 import CartIcon from "@/ui/Icons/cartIcon";
 import Badge from "@mui/material/Badge";
@@ -27,6 +26,9 @@ import { Container } from "@mui/system";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+// import { getCookie } from "@/lib/functions/storage.lib";
+import { getCookie } from 'cookies-next';
+import { toast } from "sonner";
 
 // const CustomButton = dynamic(() => import("@/ui/Buttons/CustomButton"));
 
@@ -58,17 +60,27 @@ export default function Header() {
   const dispatch = useAppDispatch();
   const router = useRouter();
 
+  const [loggedIn, SetIsloggedIn] = React.useState(false);
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
   const handleLogout = () => {
     dispatch(logout());
-    router.push("/auth/signup");
+    router.push("/");
+    toast.success("log out succes");
   };
-  const handleLogin=()=>{
-    router.push("/auth/login")
-  }
+  const handleLogin = () => {
+    router.push("/auth/login");
+  };
+
+  const usertoken = getCookie("token");
+  console.log("user-token", usertoken);
+
+  React.useEffect(() => {
+    SetIsloggedIn(!!usertoken);
+  }, [usertoken]);
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
@@ -129,29 +141,34 @@ export default function Header() {
             <Link href="/" className="headerLogo">
               <Image src={assest.logo_img} width={250} height={38} alt="Logo" />
             </Link>
-            {isLoggedIn ? (
-              <Box
-                sx={{ display: { xs: "none", sm: "block" } }}
-                className="navbar"
-              >
+            {loggedIn ? (
+              <>
+                <Box
+                  sx={{ display: { xs: "none", sm: "block" } }}
+                  className="navbar"
+                >
+                  <CustomButtonPrimary
+                    type="button"
+                    variant="contained"
+                    color="primary"
+                    onClick={handleLogout}
+                  >
+                    <span>Logout</span>
+                  </CustomButtonPrimary>
+                </Box>
+                {/* <Box>
                 <CustomButtonPrimary
-                  onClick={handleLogout}
+                 
                   type="button"
                   variant="contained"
                   color="primary"
 
                 >
-                  <span>Logout</span>
+                  <span>User</span> 
                 </CustomButtonPrimary>
-
-                <CustomButtonPrimary
-                  type="button"
-                  variant="contained"
-                  color="primary"
-                >
-                  <span>{userData?.email}</span>
-                </CustomButtonPrimary>
-              </Box>
+                
+              </Box> */}
+              </>
             ) : (
               <Box
                 sx={{ display: { xs: "none", sm: "block" } }}
@@ -176,14 +193,25 @@ export default function Header() {
                   <CartIcon />
                 </Badge>
               </Box>
-              <CustomButtonPrimary
-                type="button"
-                variant="contained"
-                color="primary"
-                onClick={handleLogin}
-              >
-                <Typography>Login</Typography>
-              </CustomButtonPrimary>
+              {!loggedIn ? (
+                <CustomButtonPrimary
+                  type="button"
+                  variant="contained"
+                  color="primary"
+                  onClick={handleLogin}
+                >
+                  <Typography>Login</Typography>
+                </CustomButtonPrimary>
+              ) : (
+                <CustomButtonPrimary
+                  type="button"
+                  variant="contained"
+                  color="primary"
+                  onClick={handleLogout}
+                >
+                  <Typography>Logout</Typography>
+                </CustomButtonPrimary>
+              )}
             </Box>
           </Toolbar>
         </Container>

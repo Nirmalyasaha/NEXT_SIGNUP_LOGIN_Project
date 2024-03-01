@@ -9,7 +9,7 @@ import persistStore from "redux-persist/lib/persistStore";
 
 
 const persistConfig={
-  key:"persistConfig",
+  key:"PersistToken",
   storage,
   version:1
   

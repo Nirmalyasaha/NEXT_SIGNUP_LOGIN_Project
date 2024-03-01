@@ -15,8 +15,8 @@ import { useRouter } from "next/router"
 import { setAccessToken, setLogInData } from "@/reduxtoolkit/slices/userSlice"
 import { useAppSelector } from "@/hooks/redux/useAppSelector"
 import Wrapper from "@/layout/wrapper/Wrapper"
-import { access } from "fs"
 import { toast } from "sonner"
+import { setCookie } from 'cookies-next';
 
 
 
@@ -70,10 +70,13 @@ export default function LOGIN(){
                     if (res?.data) {
                       const { access, ...userData } = res.data;
                       toast.success(res?.data?.message);
-
+                      setCookie('token', userData.token)
                       console.log("Token:-", userData.token);
                       dispatch(setAccessToken(userData.token));
                       dispatch(setLogInData(userData));
+                     
+                      router.push("/")
+                     
                       
                    
                     }
@@ -114,7 +117,10 @@ export default function LOGIN(){
 
         <Typography >Don't Have An Acount?Please--
             <Link href={"/auth/signup"}>Sign Up</Link>
+
         </Typography>
+        <Link href={"/auth/forgotpwd"}>Forgot password</Link>
+
         </form>
         </Box> 
         </Wrapper>

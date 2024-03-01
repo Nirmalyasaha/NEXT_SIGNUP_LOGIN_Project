@@ -14,7 +14,12 @@ export const endpoints = {
     signUpProfile: "user/signup",
     login:"user/signin",
     profileDetails: "user/profile/get",
-    profileUpdate: "user/profile/update"
+    profileUpdate: "user/profile/update",
+    forgot:"/user/forgot-password",
+    otp:"/user/verify-otp",
+    reset:"/user/reset-password"
+
+
   },
   cms: {
     about: "aboutpolicy/details",

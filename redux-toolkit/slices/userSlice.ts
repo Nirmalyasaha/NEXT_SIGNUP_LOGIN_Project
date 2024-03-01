@@ -4,12 +4,12 @@ import { destroyCookie } from "nookies";
 import { userSliceData } from "../interfaces/interfaces";
 import { boolean } from "yup";
 import { setUserAccessToken } from "@/api/axiosInstance";
+import { deleteCookie } from "cookies-next";
 
 const initialState: userSliceData = {
   isLoggedIn: false,
-  userData:null,
-  accessToken:null
-  
+  userData: null,
+  accessToken: null
 };
 
 export const userSlice = createSlice({
@@ -17,30 +17,29 @@ export const userSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-
     setLogInData: (state, { payload }: { payload: userData }) => {
-     // console.log("payload user Data",payload)
+      // console.log("payload user Data",payload)
       state.userData = payload;
     },
 
-     setAccessToken: (state, { payload }: { payload: string | null }) => {
+    setAccessToken: (state, { payload }: { payload: string | null }) => {
       state.accessToken = payload;
       state.isLoggedIn = Boolean(payload);
       setUserAccessToken(payload);
     },
-  
+
     logout: (state) => {
       state.isLoggedIn = false;
       state.userData = null;
+      state.accessToken = null;
+      deleteCookie("token");
 
-
-
+      //destroyCookie(null, process.env.NEXT_APP_TOKEN_NAME!, { path: "/" });
 
       // cookie.remove("privy_token");
       // cookie.remove("user");
 
       // destroyCookie(null, "user", { path: "/" });
-      // destroyCookie(null, process.env.NEXT_APP_TOKEN_NAME!, { path: "/" });
 
       // window.location.href = "/login";
     }
@@ -48,6 +47,6 @@ export const userSlice = createSlice({
   extraReducers: {}
 });
 
-export const { setLogInData, setAccessToken,logout } = userSlice.actions;
+export const { setLogInData, setAccessToken, logout } = userSlice.actions;
 
 export default userSlice.reducer;

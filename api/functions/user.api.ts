@@ -6,19 +6,12 @@ import { endpoints } from "../endpoints";
 import { SignUpInputs } from "pages/auth/signup";
 
 export const signUpMutation = async (body: SignUpInputs) => {
-  const res = await axiosInstance.post(
-    endpoints.auth.signup,
-    body
-  );
+  const res = await axiosInstance.post(endpoints.auth.signup, body);
   return res;
 };
 
-export const loginMutation = async (body:LogInFormInput) => {
-  const res = await axiosInstance.post(
-    endpoints.auth.login,
-    body
-  
-  );
+export const loginMutation = async (body: LogInFormInput) => {
+  const res = await axiosInstance.post(endpoints.auth.login, body);
   return res;
 };
 // export const GetProfileDetails = async () => {
@@ -34,3 +27,45 @@ export const loginMutation = async (body:LogInFormInput) => {
 //   );
 //   return res;
 // };
+
+//////// ---- FORGOT PASSWORD -------
+
+export const ForgotPassword = async (data:ForgotpwdType) => {
+  const res = await axiosInstance.post(endpoints.auth.forgot,data);
+  console.log("forgot pass res",res)
+
+  return res;
+};
+
+export const OTP=async(data:OTPType)=>{
+  const res = await  axiosInstance.post(endpoints.auth.otp);
+  console.log ("otp res ",res,data)
+
+  return res ;
+}
+
+
+export const RESETPassword = async (data:ResetpwdType)=>{
+  const res = await axiosInstance.post (endpoints.auth.reset);
+  console.log("Reset Pwd ,",res)
+  return res ;
+     
+
+
+}
+
+
+/////////////////// ---- INTERFACE TYPES ----
+
+export interface ForgotpwdType {
+  email: string;
+}
+ export interface OTPType {
+  email: string;
+  otp: string;
+}
+export interface ResetpwdType {
+  email: string;
+  password: string;
+  confirm_password: string;
+}
