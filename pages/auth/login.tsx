@@ -115,7 +115,7 @@ export default function LOGIN(){
         variant="contained"color="primary"         
         type="submit">Submit</CustomButtonPrimary>
 
-        <Typography >Don't Have An Acount?Please--
+        <Typography sx={{color:"black"}} >Don't Have An Acount?Please--
             <Link href={"/auth/signup"}>Sign Up</Link>
 
         </Typography>

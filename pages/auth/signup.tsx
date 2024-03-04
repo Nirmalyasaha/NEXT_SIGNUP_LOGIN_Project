@@ -14,6 +14,7 @@ import { useRouter } from "next/router";
 import { toast } from "sonner";
 import Wrapper from "@/layout/wrapper/Wrapper";
 import { emailRegex } from "@/lib/functions/_helpers.lib";
+import Link from "next/link";
 
 export interface SignUpInputs {
   fullName: string;
@@ -107,6 +108,10 @@ export default function SignUp() {
             error={Boolean(errors.password)}
             helperText={errors.password?.message}
           />
+          <Typography sx={{color:"black"}}>
+            Already Have An Acount ? Please Log In Here---
+            <Link href={"/auth/login"}>Log In</Link>
+          </Typography>
 
           <CustomButtonPrimary
             variant="contained"

@@ -147,14 +147,14 @@ export default function Header() {
                   sx={{ display: { xs: "none", sm: "block" } }}
                   className="navbar"
                 >
-                  <CustomButtonPrimary
+                  {/* <CustomButtonPrimary
                     type="button"
                     variant="contained"
                     color="primary"
                     onClick={handleLogout}
                   >
                     <span>Logout</span>
-                  </CustomButtonPrimary>
+                  </CustomButtonPrimary> */}
                 </Box>
                 {/* <Box>
                 <CustomButtonPrimary

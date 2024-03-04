@@ -1,0 +1,26 @@
+.fgtpwd_Main{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;  
+    margin:110px auto;
+    width:35%;
+    height: 30vh;
+    background-color: rgb(218, 243, 243);
+    border-radius: 10px;
+    box-shadow:  6px 10px 10px  rgba(35, 112, 228, 0.945);
+}
+.Otp_Main{
+
+  display: flex;
+  align-items: center;  
+  justify-content: center;
+  margin:  auto;
+  flex-direction: column;
+  width: 40%;
+  height: 50vh;
+  background-color: rgb(218, 243, 243);
+  border-radius: 10px;
+  box-shadow:  6px 10px 10px  rgba(39, 122, 245, 0.945);
+
+}

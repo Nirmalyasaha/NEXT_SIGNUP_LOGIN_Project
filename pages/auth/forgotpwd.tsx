@@ -10,13 +10,14 @@ import { emailRegex } from "@/lib/functions/_helpers.lib";
 import InputFieldCommon from "@/ui/CommonInput/CommonInput";
 import CustomButtonPrimary from "@/ui/CustomButtons/CustomButtonPrimary";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as yup from "yup";
+import styles from "@/styles/forgot.module.css";
 
 //////------FORGOT PWD------
 
@@ -135,53 +136,54 @@ const Forgotpwd = () => {
         }
       }
     );
+  };
 
-    //////////FUNCTION FOR RESET PASSWORD --------
+  //////////FUNCTION FOR RESET PASSWORD --------
 
-    const { register: resetRegister, handleSubmit: ResetSubmit } = useForm({
-      resolver: yupResolver(ResetSchema),
-      mode: "all",
-      defaultValues: {
-        email: "",
-        password: "",
-        confirm_password: ""
-      }
-    });
-    const { mutate: ResetMutate } = useMutation({ mutationFn: RESETPassword });
-    console.log("regre");
+  const { register: resetRegister, handleSubmit: ResetSubmit } = useForm({
+    resolver: yupResolver(ResetSchema),
+    mode: "all",
+    defaultValues: {
+      email: "",
+      password: "",
+      confirm_password: ""
+    }
+  });
+  const { mutate: ResetMutate } = useMutation({ mutationFn: RESETPassword });
+  //console.log("regre");
 
-    const handlePasswordReset = (data: ResetSchemaType) => {
-      console.log("reset", data);
+  const handlePasswordReset = (data: ResetSchemaType) => {
+    console.log("reset", data);
 
-      ResetMutate(
-        { ...data },
-        {
-          onSuccess: (response) => {
-            if (response?.data?.status === 200) {
-              toast.success(response?.data?.message);
-              router.push("/auth/login");
-            }
+    ResetMutate(
+      { ...data },
+      {
+        onSuccess: (response) => {
+          if (response?.data?.status === 200) {
+            toast.success(response?.data?.message);
+            router.push("/auth/login");
           }
         }
-      );
-    };
+      }
+    );
+  };
 
-    return (
-      <>
-        vbnbvb
-        <Wrapper>
-          {!isGetOTP ? (
-            <>
+  return (
+    <>
+      <Wrapper>
+        {!isGetOTP ? (
+          <>
+            <Box className={styles.fgtpwd_Main}>
               <form onSubmit={handleSubmit(ForgotPWDSubmit)}>
                 <InputFieldCommon
                   label="Email"
-                  type="text"
+                  type="email"
                   {...register("email")}
                   sx={{ width: 400, marginBottom: "10px" }}
                 />
 
                 <CustomButtonPrimary
-                  sx={{ margin: "15px" }}
+                  sx={{ margin: "15px"}}
                   variant="contained"
                   color="primary"
                   type="submit"
@@ -189,25 +191,27 @@ const Forgotpwd = () => {
                   Send Otp
                 </CustomButtonPrimary>
               </form>
-            </>
-          ) : !verifyOTP ? (
-            <>
+            </Box>
+          </>
+        ) : !verifyOTP ? (
+          <>
+            <Box className={styles.Otp_Main}>
               <form onSubmit={SubmitOtp(handleOtp)}>
                 <InputFieldCommon
                   label="Email"
-                  type="text"
+                  type="email"
                   value={mail}
                   {...OtpReg("email")}
-                  sx={{ width: 400, marginBottom: "10px" }}
+                  sx={{ width: 400, marginBottom: "10px", mx: 6 }}
                 />
                 <InputFieldCommon
                   label="OTP"
                   type="text"
                   {...OtpReg("otp")}
-                  sx={{ width: 400, marginBottom: "10px" }}
+                  sx={{ width: 400, marginBottom: "10px", mx: 6 }}
                 />
                 <CustomButtonPrimary
-                  sx={{ margin: "15px" }}
+                  sx={{ margin: "15px"}}
                   variant="contained"
                   color="primary"
                   type="submit"
@@ -215,157 +219,54 @@ const Forgotpwd = () => {
                   <Typography>Verify OTP</Typography>
                 </CustomButtonPrimary>
               </form>
-            </>
-          ) : (
-            <>
-              <form onSubmit={ResetSubmit(handlePasswordReset)}>
-                <InputFieldCommon
-                  required
-                  type="text"
-                  value={mail}
-                  aria-readonly
-                  sx={{
-                    my: 1
-                  }}
-                  {...resetRegister("email")}
-                />
-                <InputFieldCommon
-                  required
-                  type="password"
-                  label="Password"
-                  sx={{
-                    my: 1
-                  }}
-                  {...resetRegister("password")}
-                />
-                <InputFieldCommon
-                  required
-                  type="password"
-                  label="Confirm Password"
-                  sx={{
-                    my: 1
-                  }}
-                  {...resetRegister("confirm_password")}
-                />
-                <CustomButtonPrimary
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                  sx={{
-                    margin: "auto"
-                  }}
-                >
-                  <Typography>Reset Password</Typography>
-                </CustomButtonPrimary>
-              </form>
-            </>
-          )}
-        </Wrapper>
-      </>
-    );
-  };
-
-
-
-
-
-
-
-  // return (
-  //   <>
-  //   <Wrapper>
-  //         {!isGetOTP ? (
-  //           <>
-  //             <form onSubmit={handleSubmit(ForgotPWDSubmit)}>
-  //               <InputFieldCommon
-  //                 label="Email"
-  //                 type="text"
-  //                 {...register("email")}
-  //                 sx={{ width: 400, marginBottom: "10px" }}
-  //               />
-
-  //               <CustomButtonPrimary
-  //                 sx={{ margin: "15px" }}
-  //                 variant="contained"
-  //                 color="primary"
-  //                 type="submit"
-  //               >
-  //                 Send Otp
-  //               </CustomButtonPrimary>
-  //             </form>
-  //           </>
-  //         ) : !verifyOTP ? (
-  //           <>
-  //             <form onSubmit={SubmitOtp(handleOtp)}>
-  //               <InputFieldCommon
-  //                 label="Email"
-  //                 type="text"
-  //                 value={mail}
-  //                 {...OtpReg("email")}
-  //                 sx={{ width: 400, marginBottom: "10px" }}
-  //               />
-  //               <InputFieldCommon
-  //                 label="OTP"
-  //                 type="text"
-  //                 {...OtpReg("otp")}
-  //                 sx={{ width: 400, marginBottom: "10px" }}
-  //               />
-  //               <CustomButtonPrimary
-  //                 sx={{ margin: "15px" }}
-  //                 variant="contained"
-  //                 color="primary"
-  //                 type="submit"
-  //               >
-  //                 <Typography>Verify OTP</Typography>
-  //               </CustomButtonPrimary>
-  //             </form>
-  //           </>
-  //         ) : (
-  //           <>
-  //             <form onSubmit={ResetSubmit(handlePasswordReset)}>
-  //               <InputFieldCommon
-  //                 required
-  //                 type="text"
-  //                 value={mail}
-  //                 aria-readonly
-  //                 sx={{
-  //                   my: 1
-  //                 }}
-  //                 {...resetRegister("email")}
-  //               />
-  //               <InputFieldCommon
-  //                 required
-  //                 type="password"
-  //                 label="Password"
-  //                 sx={{
-  //                   my: 1
-  //                 }}
-  //                 {...resetRegister("password")}
-  //               />
-  //               <InputFieldCommon
-  //                 required
-  //                 type="password"
-  //                 label="Confirm Password"
-  //                 sx={{
-  //                   my: 1
-  //                 }}
-  //                 {...resetRegister("confirm_password")}
-  //               />
-  //               <CustomButtonPrimary
-  //                 type="submit"
-  //                 variant="contained"
-  //                 color="primary"
-  //                 sx={{
-  //                   margin: "auto"
-  //                 }}
-  //               >
-  //                 <Typography>Reset Password</Typography>
-  //               </CustomButtonPrimary>
-  //             </form>
-  //           </>
-  //         )}
-  //       </Wrapper>
-  //   </>
-  // )
+            </Box>
+          </>
+        ) : (
+          <>
+            <form onSubmit={ResetSubmit(handlePasswordReset)}>
+              <InputFieldCommon
+                required
+                type="text"
+                value={mail}
+                aria-readonly
+                sx={{
+                  my: 1
+                }}
+                {...resetRegister("email")}
+              />
+              <InputFieldCommon
+                required
+                type="password"
+                label="Password"
+                sx={{
+                  my: 1
+                }}
+                {...resetRegister("password")}
+              />
+              <InputFieldCommon
+                required
+                type="password"
+                label="Confirm Password"
+                sx={{
+                  my: 1
+                }}
+                {...resetRegister("confirm_password")}
+              />
+              <CustomButtonPrimary
+                type="submit"
+                variant="contained"
+                color="primary"
+                sx={{
+                  margin: "auto"
+                }}
+              >
+                <Typography>Reset Password</Typography>
+              </CustomButtonPrimary>
+            </form>
+          </>
+        )}
+      </Wrapper>
+    </>
+  );
 };
 export default Forgotpwd;
